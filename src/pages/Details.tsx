@@ -1,3 +1,58 @@
-export const Details = () => {
-  return <p> Details</p>;
+import React, { useEffect, useState } from 'react';
+import pokemonServices from '../services/pokemonServices';
+import { PokemonDetails as IPokemonDetails } from '../interface/pokemon.interface';
+import { Button, Loading } from '../components';
+import { useNavigate, useParams } from 'react-router-dom';
+import { DetailsPokemonCard } from '../components/DetailsPokemonCard/DetailsPokemonCard';
+
+export const PokemonDetails: React.FC = () => {
+  const [pokemonDetails, setPokemonDetails] = useState<IPokemonDetails | null>(
+    null
+  );
+  const [loading, setLoading] = useState(true);
+  const { id } = useParams();
+  const navigate = useNavigate();
+
+  console.log('details', pokemonDetails);
+
+  useEffect(() => {
+    const fetchPokemonDetails = async () => {
+      if (id) {
+        try {
+          const details: IPokemonDetails | null =
+            await pokemonServices.getPokemonDetailsById(id);
+          if (details) {
+            setPokemonDetails(details);
+          }
+        } catch (error) {
+          console.error('Error fetching pokemon details:', error);
+        } finally {
+          setLoading(false);
+        }
+      }
+    };
+
+    fetchPokemonDetails();
+  }, [id]);
+
+  const handleGoBack = () => {
+    navigate('/pokemons');
+  };
+
+  if (loading) {
+    return <Loading />;
+  }
+
+  return (
+    <div className='min-h-screen bg-gray-100  p-8'>
+      <div className='max-w-4xl mx-auto mb-4'>
+        <Button text='Volver' onClick={handleGoBack} />
+      </div>
+      <div>
+        <DetailsPokemonCard
+          pokemonDetails={pokemonDetails as IPokemonDetails}
+        />
+      </div>
+    </div>
+  );
 };
