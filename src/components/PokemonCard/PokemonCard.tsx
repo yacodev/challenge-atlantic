@@ -1,12 +1,17 @@
-import { CardPokemonProps } from './interface';
+import { Button } from '../Button';
+import { PokemonCardProps } from './interface';
 
-export const CardPokemon = ({ pokemon, handleNavigate }: CardPokemonProps) => {
+export const PokemonCard = ({
+  pokemon,
+  handleNavigate,
+  showCaptureButton,
+  handleCapture,
+}: PokemonCardProps) => {
   return (
     <div
       className='w-48 flex-none bg-white  rounded-xl p-4 
                                shadow-md hover:shadow-xl transition-all duration-300 
                                hover:scale-105 hover:-translate-y-1'
-      onClick={() => handleNavigate(pokemon)}
     >
       <div
         className='aspect-square flex items-center justify-center 
@@ -26,8 +31,15 @@ export const CardPokemon = ({ pokemon, handleNavigate }: CardPokemonProps) => {
       >
         {pokemon.name}
       </p>
+      {showCaptureButton && handleCapture && (
+        <div className='flex flex-col justify-center mt-2 gap-2'>
+          <Button text='Capturar' onClick={() => handleCapture(pokemon)} />
+          <Button
+            text=' Ver detalles'
+            onClick={() => handleNavigate(pokemon.id)}
+          />
+        </div>
+      )}
     </div>
   );
 };
-
-export default CardPokemon;
