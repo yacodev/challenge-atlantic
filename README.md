@@ -16,6 +16,9 @@ Herramientas que se utilizaron:
 3. Puede caprturar cualquier pokemon.
 3. Tambien tiene la opción de hacer click en  el boton "ver pokemones capturados", lo que le redigira al  historial de pokemones capturados.
 
+Puedes acceder al link desplegado en:
+https://challenge-atlantic.vercel.app/
+
 
 ## Estructura del repositorio
 
