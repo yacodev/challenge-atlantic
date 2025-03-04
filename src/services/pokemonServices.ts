@@ -49,6 +49,18 @@ export const pokemonServices = {
       return null;
     }
   },
+
+  getPokemonDetailsById: async (id: string) => {
+    try {
+      const { data } = await axios.get<PokemonDetails>(
+        `${BASE_URL}/pokemon/${id}`
+      );
+      return data;
+    } catch (error) {
+      console.error('Error fetching pokemon details:', error);
+      return null;
+    }
+  },
 };
 
 export default pokemonServices;
