@@ -1,9 +1,16 @@
 import { useNavigate } from 'react-router-dom';
 import { useUserStore } from '../store';
+import { Button } from '../components';
+import { ButtonType } from '../components/Button/interface';
+import { useEffect } from 'react';
 
 export const Login = () => {
   const navigate = useNavigate();
   const { name, setName } = useUserStore();
+
+  useEffect(() => {
+    setName('');
+  }, []);
 
   const handleSubmit = () => {
     navigate('/pokemons');
@@ -27,13 +34,13 @@ export const Login = () => {
           onChange={(e) => setName(e.target.value)}
           className='w-full mb-4 p-2 border border-gray-300  rounded-md bg-white  text-gray-900 '
         />
-
-        <button
-          onClick={handleSubmit}
-          className='w-full py-2 px-4 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed'
-        >
-          ingresar
-        </button>
+        <div className='flex justify-center'>
+          <Button
+            text='ingresar'
+            onClick={handleSubmit}
+            type={ButtonType.Secondary}
+          />
+        </div>
       </div>
     </div>
   );

@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import pokemonServices from '../services/pokemonServices';
-import { PokemonDetails as IPokemonDetails } from '../interface/pokemon.interface';
+import {
+  PokemonDetails as IPokemonDetails,
+  Pokemon,
+} from '../interface/pokemon.interface';
 import { Button, Loading } from '../components';
 import { useNavigate, useParams } from 'react-router-dom';
 import { DetailsPokemonCard } from '../components/DetailsPokemonCard/DetailsPokemonCard';
+import { usePokemonCapturedStore } from '../store/pokemonCapturedStore';
+import { useUser } from '../hooks/useUser';
 
 export const PokemonDetails: React.FC = () => {
   const [pokemonDetails, setPokemonDetails] = useState<IPokemonDetails | null>(
@@ -12,8 +17,8 @@ export const PokemonDetails: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const { id } = useParams();
   const navigate = useNavigate();
-
-  console.log('details', pokemonDetails);
+  const { setListPokemonCaptured } = usePokemonCapturedStore();
+  const { userLogged } = useUser();
 
   useEffect(() => {
     const fetchPokemonDetails = async () => {
@@ -39,6 +44,21 @@ export const PokemonDetails: React.FC = () => {
     navigate('/pokemons');
   };
 
+  const handlePokemonCapture = () => {
+    const pokemon: Pokemon = {
+      id: pokemonDetails!.id,
+      name: pokemonDetails!.name,
+      url: '',
+      sprites: {
+        front_default: pokemonDetails!.sprites.front_default ?? '',
+      },
+    };
+
+    if (pokemon) {
+      setListPokemonCaptured(pokemon);
+    }
+  };
+
   if (loading) {
     return <Loading />;
   }
@@ -51,6 +71,8 @@ export const PokemonDetails: React.FC = () => {
       <div>
         <DetailsPokemonCard
           pokemonDetails={pokemonDetails as IPokemonDetails}
+          handlePokemonCapture={handlePokemonCapture}
+          showCapturedButton={userLogged}
         />
       </div>
     </div>

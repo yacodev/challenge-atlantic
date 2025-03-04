@@ -1,4 +1,5 @@
 import { Button } from '../Button';
+import { ButtonType } from '../Button/interface';
 import { PokemonCardProps } from './interface';
 
 export const PokemonCard = ({
@@ -31,15 +32,20 @@ export const PokemonCard = ({
       >
         {pokemon.name}
       </p>
-      {showCaptureButton && handleCapture && (
-        <div className='flex flex-col justify-center mt-2 gap-2'>
-          <Button text='Capturar' onClick={() => handleCapture(pokemon)} />
+
+      <div className='flex flex-col justify-center mt-2 gap-2'>
+        {showCaptureButton && handleCapture && (
           <Button
-            text=' Ver detalles'
-            onClick={() => handleNavigate(pokemon.id)}
+            text='Capturar'
+            onClick={() => handleCapture(pokemon)}
+            type={ButtonType.Secondary}
           />
-        </div>
-      )}
+        )}
+        <Button
+          text=' Ver detalles'
+          onClick={() => handleNavigate(pokemon.id)}
+        />
+      </div>
     </div>
   );
 };

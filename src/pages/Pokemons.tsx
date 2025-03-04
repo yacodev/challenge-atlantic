@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
-import { useUserStore } from '../store';
 import { pokemonServices } from '../services/pokemonServices';
 import { Pokemon } from '../interface';
 import { useNavigate } from 'react-router-dom';
 import { PokemonCard, Loading, Button } from '../components';
 import { usePokemonCapturedStore } from '../store/pokemonCapturedStore';
+import { useUser } from '../hooks/useUser';
 
 export const Pokemons = () => {
-  const { name } = useUserStore();
+  const { userLogged, name } = useUser();
   const { listPokemonCaptured, setListPokemonCaptured } =
     usePokemonCapturedStore();
 
@@ -66,8 +66,6 @@ export const Pokemons = () => {
     setListPokemonCaptured(pokemon);
     console.log('listPokemonCaptured', listPokemonCaptured);
   };
-
-  const userLogged = name !== '';
 
   if (loading) {
     return <Loading />;

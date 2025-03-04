@@ -1,8 +1,12 @@
+import { Button } from '../Button';
+import { ButtonType } from '../Button/interface';
 import { BasicInformation, Skills } from './components';
 import { DetailsPokemonCardProps } from './interface';
 
 export const DetailsPokemonCard = ({
   pokemonDetails,
+  handlePokemonCapture,
+  showCapturedButton = false,
 }: DetailsPokemonCardProps) => {
   return (
     <div className='max-w-4xl mx-auto bg-white  rounded-lg shadow-lg overflow-hidden'>
@@ -19,6 +23,15 @@ export const DetailsPokemonCard = ({
           <p className='text-center text-gray-600 '>
             #{String(pokemonDetails.id).padStart(3, '0')}
           </p>
+          {showCapturedButton && (
+            <div className='flex justify-center mt-4'>
+              <Button
+                text='Capturar'
+                onClick={handlePokemonCapture}
+                type={ButtonType.Secondary}
+              />
+            </div>
+          )}
         </div>
 
         <div className='md:w-1/2 p-8'>
