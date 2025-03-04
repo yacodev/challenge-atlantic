@@ -1,4 +1,3 @@
-import React from 'react';
 import { SkillsProps } from './interface';
 
 export const Skills = ({ pokemonDetails }: SkillsProps) => {
